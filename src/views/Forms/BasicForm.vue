@@ -1,5 +1,7 @@
 <template>
-  <div>home page</div>
+  <div>
+    basic form
+  </div>
 </template>
 
 <script>

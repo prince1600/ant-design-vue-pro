@@ -1,5 +1,8 @@
 <template>
-  <div>home page</div>
+  <div>
+    basic layout
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
