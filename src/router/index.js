@@ -10,6 +10,7 @@ const routes = [
   // user
   {
     path: '/user',
+    hideInMenu: true,
     component: () => import(/* webpackChunkName: 'layout' */ '@/components/UserLayout'),
     redirect: '/user/login',
     children: [
@@ -34,10 +35,13 @@ const routes = [
       {
         path: '/dashboard',
         name: 'dashboard',
+        meta: { icon: 'dashboard', title: '仪表盘' },
         component: { render: h => h('router-view') },
         children: [
           {
             path: '/dashboard/analysis',
+            name: 'analysis',
+            meta: { title: '分析页' },
             component: () => import(/* webpackChunkName: 'dashboard' */ '@/views/Dashboard/Analysis')
           }
         ]
@@ -46,16 +50,21 @@ const routes = [
       {
         path: '/form',
         name: 'form',
+        meta: { icon: 'form', title: '表单' },
         component: { render: h => h('router-view') },
         children: [
           {
             path: '/form/basic-form',
             name: 'basicform',
+            meta: { title: '基础表单' },
             component: () => import(/* webpackChunkName: 'form' */ '@/views/Forms/BasicForm')
           },
           {
             path: '/form/step-form',
             name: 'stepform',
+            redirect: '/form/step-form/info',
+            meta: { title: '分步表单' },
+            hideChildMenu: true,
             component: () => import(/* webpackChunkName: 'form' */ '@/views/Forms/StepForm'),
             children: [
               {
@@ -82,6 +91,7 @@ const routes = [
   {
     path: '*',
     name: '404',
+    hideInMenu: true,
     component: NotFound
   }
 ]
@@ -93,7 +103,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  NProgress.start()
+  if (to.path !== from.path) {
+    NProgress.start()
+  }
   next()
 })
 router.afterEach(() => {
