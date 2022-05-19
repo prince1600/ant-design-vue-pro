@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress//nprogress.css'
 import NotFound from '@/views/404'
+import findLast from 'lodash/findLast'
+import { checkAuthorization, getUserInfo } from '@/utils/auth'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -42,7 +45,8 @@ const routes = [
             path: '/dashboard/analysis',
             name: 'analysis',
             meta: { title: '分析页' },
-            component: () => import(/* webpackChunkName: 'dashboard' */ '@/views/Dashboard/Analysis')
+            component: () =>
+              import(/* webpackChunkName: 'dashboard' */ '@/views/Dashboard/Analysis')
           }
         ]
       },
@@ -63,24 +67,27 @@ const routes = [
             path: '/form/step-form',
             name: 'stepform',
             redirect: '/form/step-form/info',
-            meta: { title: '分步表单' },
+            meta: { title: '分步表单', authorization: ['SUPER_ADMIN', 'ADMIN'] },
             hideChildMenu: true,
             component: () => import(/* webpackChunkName: 'form' */ '@/views/Forms/StepForm'),
             children: [
               {
                 path: '/form/step-form/info',
                 name: 'info',
-                component: () => import(/* webpackChunkName: 'form' */ '@/views/Forms/StepForm/Step1')
+                component: () =>
+                  import(/* webpackChunkName: 'form' */ '@/views/Forms/StepForm/Step1')
               },
               {
                 path: '/form/step-form/confirm',
                 name: 'confirm',
-                component: () => import(/* webpackChunkName: 'form' */ '@/views/Forms/StepForm/Step2')
+                component: () =>
+                  import(/* webpackChunkName: 'form' */ '@/views/Forms/StepForm/Step2')
               },
               {
                 path: '/form/step-form/result',
                 name: 'result',
-                component: () => import(/* webpackChunkName: 'form' */ '@/views/Forms/StepForm/Step3')
+                component: () =>
+                  import(/* webpackChunkName: 'form' */ '@/views/Forms/StepForm/Step3')
               }
             ]
           }
@@ -105,8 +112,27 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.path !== from.path) {
     NProgress.start()
+    next()
   }
-  next()
+  if (!/user/.test(to.path)) {
+    const token = localStorage.getItem('token')
+    if (token) {
+      const userInfo = getUserInfo()
+      store.commit('setUserInfo', { userInfo })
+      console.log('state', store.state)
+    }
+  }
+  const last = findLast(to.matched, item => item.meta.authorization)
+  if (last) {
+    const isLeagal = checkAuthorization(last.meta.authorization, store.state.userInfo.userType)
+    if (!isLeagal) {
+      next('/404')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 router.afterEach(() => {
   NProgress.done()
