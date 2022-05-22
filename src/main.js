@@ -1,5 +1,15 @@
 import Vue from 'vue'
-import { Button, Layout, Icon, Menu, Drawer, Radio, FormModel, Input, message } from 'ant-design-vue'
+import {
+  Button,
+  Layout,
+  Icon,
+  Menu,
+  Drawer,
+  Radio,
+  FormModel,
+  Input,
+  message
+} from 'ant-design-vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -16,8 +26,13 @@ Vue.use(Input)
 Vue.use(FormModel)
 Vue.use(message)
 
+const CustomIcon = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_3415492_pgdics7iep.js' // 在 iconfont.cn 上生成
+})
+Vue.component('CustomIcon', CustomIcon)
+
 new Vue({
   router,
   store,
-  render: (h) => h(App)
+  render: h => h(App)
 }).$mount('#app')

@@ -9,7 +9,9 @@
         collapsible
         :theme="navTheme"
       >
-        <div class="logo">Ant Design Pro</div>
+        <div class="logo" style="font-size: 18px">
+          <CustomIcon type="icon-antdesign" style="color: #fff;" /> Ant Design Pro
+        </div>
         <SideMenu :navTheme="navTheme" />
       </a-layout-sider>
       <a-layout>
