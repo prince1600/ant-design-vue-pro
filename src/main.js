@@ -8,7 +8,9 @@ import {
   Radio,
   FormModel,
   Input,
-  message
+  message,
+  Form,
+  Select
 } from 'ant-design-vue'
 import App from './App.vue'
 import router from './router'
@@ -25,6 +27,8 @@ Vue.use(Radio)
 Vue.use(Input)
 Vue.use(FormModel)
 Vue.use(message)
+Vue.use(Form)
+Vue.use(Select)
 
 const CustomIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_3415492_pgdics7iep.js' // 在 iconfont.cn 上生成

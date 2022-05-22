@@ -1,6 +1,6 @@
 <template>
   <div>
-    step3
+    付款成功！
   </div>
 </template>
 
