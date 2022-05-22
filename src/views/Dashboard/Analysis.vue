@@ -1,16 +1,24 @@
 <template>
-  <div style="width: 50%; height: 300px">
-    <Chart style="width: 100%; height: 100%" :option="chartOption" />
+  <div>
+    <div style="width: 50%; height: 300px">
+      <Chart style="width: 100%; height: 100%" :option="chartOption" />
+    </div>
+    <div class="code">
+      <pre v-highlightjs="chartCode"><code class="html"></code></pre>
+    </div>
   </div>
 </template>
 
 <script>
+
 import Chart from '@/components/charts.vue'
+import chartCode from '!!raw-loader!@/components/charts.vue'
 import random from 'lodash/random'
 export default {
   components: { Chart },
   data() {
     return {
+      chartCode,
       chartOption: {
         title: {
           text: 'ECharts 入门示例'

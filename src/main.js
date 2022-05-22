@@ -15,9 +15,11 @@ import {
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import vueHighlightJS from 'vue-highlightjs'
+import 'highlight.js/styles/vs.css'
 
 Vue.config.productionTip = false
-
+Vue.use(vueHighlightJS)
 Vue.use(Button)
 Vue.use(Layout)
 Vue.use(Icon)

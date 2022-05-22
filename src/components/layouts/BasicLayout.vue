@@ -24,7 +24,7 @@
           <Header />
         </a-layout-header>
         <a-layout-content
-          :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+          :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px',}"
         >
           <router-view></router-view>
         </a-layout-content>
@@ -70,7 +70,7 @@ export default {
 
 <style lang="less" scoped>
 #components-layout {
-  height: 100vh;
+  min-height: 100vh;
 }
 #components-layout .trigger {
   font-size: 18px;
